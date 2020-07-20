@@ -7,7 +7,7 @@ class City:
     self.lat = lat
     self.lon = lon
   def __str__(self):
-    return f"{self.name} lat: {self.lat} lon: {self.lon}"
+    return f"{self.name}: ({self.lat},{self.lon})"
 
 
 # We have a collection of US cities with population over 750,000 stored in the
@@ -79,12 +79,38 @@ for c in cities:
 # Salt Lake City: (40.7774,-111.9301)
 
 # TODO Get latitude and longitude values from the user
+input1 = input("Enter lat1,lon1: ")
+input2 = input("Enter lat2,lon2: ")
+
+lat1, lon1 = input1.split(",")
+lat1 = float(lat1)
+lon1 = float(lon1)
+lat2, lon2 = input2.split(",")
+lat2 = float(lat2)
+lon2 = float(lon2)
+
+print(f'({lat1},{lon1}) ({lat2},{lon2})')
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # within will hold the cities that fall within the specified region
   within = []
+
+  if(lat1 < lat2):
+    temp = lat1
+    lat1 = lat2
+    lat2 = temp
+    temp = lon1
+    lon1 = lon2
+    lon2 = temp 
   
   # Go through each city and check to see if it falls within 
   # the specified coordinates.
+  for city in cities:
+    if(city.lat <= lat1 and city.lat >= lat2 and city.lon <= lon1 and city.lon >= lon2):
+      within.append(city)
 
   return within
+
+test = cityreader_stretch(lat1, lon1, lat2, lon2, cities)
+len(test)
+[print(city) for city in test]
